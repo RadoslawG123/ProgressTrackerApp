@@ -1,16 +1,44 @@
-# Visual Studio cache
+# =========================================
+# Visual Studio i .NET Core
+# =========================================
+
 .vs/
 *.user
 *.suo
+*.userosscache
+*.sln.docstates
 
-# Build results
+# Foldery buildów i tymczasowe
 bin/
 obj/
+out/
 
-# Temporary files
+# Logi i tymczasowe dane
 *.log
-*.tmp
 
-# Others
-*.dbmdl
-*.vsp
+# Baza danych SQLite (jeœli u¿ywasz)
+*.db
+*.sqlite
+
+# Secret config files / dane u¿ytkowników
+appsettings.Development.json
+secrets.json
+*.env
+.env.*
+
+# ASP.NET Core specific
+wwwroot/lib/
+node_modules/
+dist/
+
+# Rider / JetBrains IDE
+.idea/
+
+# Systemowe
+Thumbs.db
+.DS_Store
+
+# Backupy i inne
+*.bak
+*.tmp
+*.old

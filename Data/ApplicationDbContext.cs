@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using ProgressTrackerApp.Models;
 
 namespace ProgressTrackerApp.Data
 {
@@ -9,5 +10,7 @@ namespace ProgressTrackerApp.Data
             : base(options)
         {
         }
+        public DbSet<ProgressTrackerApp.Models.Goal> Goal { get; set; } = default!;
+        public DbSet<ProgressTrackerApp.Models.TaskG> TaskG { get; set; } = default!;
     }
 }
