@@ -1,22 +1,25 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
+using ProgressTrackerApp.Data;
+using ProgressTrackerApp.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
-using ProgressTrackerApp.Data;
-using ProgressTrackerApp.Models;
 
 namespace ProgressTrackerApp.Controllers
 {
     public class TasksGController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private readonly ILogger<TasksGController> _logger;
 
-        public TasksGController(ApplicationDbContext context)
+        public TasksGController(ApplicationDbContext context, ILogger<TasksGController> logger)
         {
             _context = context;
+            _logger = logger;
         }
 
         // GET: TasksG
@@ -48,7 +51,7 @@ namespace ProgressTrackerApp.Controllers
         // GET: TasksG/Create
         public IActionResult Create()
         {
-            ViewData["GoalId"] = new SelectList(_context.Goal, "Id", "Id");
+            ViewBag.GoalId = new SelectList(_context.Goal, "Id", "Name");
             return View();
         }
 
@@ -59,13 +62,25 @@ namespace ProgressTrackerApp.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,Finish,Name,Priority,Status,FinishDate,GoalId")] TaskG taskG)
         {
+           
+
             if (ModelState.IsValid)
             {
+                _logger.LogInformation("Create POST triggered!!!!!!");
                 _context.Add(taskG);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["GoalId"] = new SelectList(_context.Goal, "Id", "Id", taskG.GoalId);
+
+            foreach (var modelState in ModelState.Values)
+            {
+                foreach (var error in modelState.Errors)
+                {
+                    _logger.LogInformation("Validation Error: " + error.ErrorMessage);
+                }
+            }
+
+            ViewBag.GoalId = new SelectList(_context.Goal, "Id", "Name", taskG.GoalId);
             return View(taskG);
         }
 
@@ -82,7 +97,7 @@ namespace ProgressTrackerApp.Controllers
             {
                 return NotFound();
             }
-            ViewData["GoalId"] = new SelectList(_context.Goal, "Id", "Id", taskG.GoalId);
+            ViewData["GoalId"] = new SelectList(_context.Goal, "Id", "Name", taskG.GoalId);
             return View(taskG);
         }
 
@@ -118,7 +133,7 @@ namespace ProgressTrackerApp.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["GoalId"] = new SelectList(_context.Goal, "Id", "Id", taskG.GoalId);
+            ViewData["GoalId"] = new SelectList(_context.Goal, "Id", "Name", taskG.GoalId);
             return View(taskG);
         }
 
