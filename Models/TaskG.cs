@@ -11,7 +11,7 @@ namespace ProgressTrackerApp.Models
         public string Status { get; set; } = "Not started";
         public DateTime? FinishDate { get; set; }
         public int GoalId { get; set; }
-        public Goal Goal { get; set; } = null!;
+        public Goal? Goal { get; set; } = null!;
 
         public TaskG()
         {

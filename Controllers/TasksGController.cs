@@ -48,7 +48,7 @@ namespace ProgressTrackerApp.Controllers
         // GET: TasksG/Create
         public IActionResult Create()
         {
-            ViewData["GoalId"] = new SelectList(_context.Goal, "Id", "Id");
+            ViewData["GoalId"] = new SelectList(_context.Goal, "Id", "Name");
             return View();
         }
 
@@ -65,7 +65,7 @@ namespace ProgressTrackerApp.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["GoalId"] = new SelectList(_context.Goal, "Id", "Id", taskG.GoalId);
+            ViewData["GoalId"] = new SelectList(_context.Goal, "Id", "Name", taskG.GoalId);
             return View(taskG);
         }
 
@@ -82,7 +82,7 @@ namespace ProgressTrackerApp.Controllers
             {
                 return NotFound();
             }
-            ViewData["GoalId"] = new SelectList(_context.Goal, "Id", "Id", taskG.GoalId);
+            ViewData["GoalId"] = new SelectList(_context.Goal, "Id", "Name", taskG.GoalId);
             return View(taskG);
         }
 
@@ -118,7 +118,7 @@ namespace ProgressTrackerApp.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["GoalId"] = new SelectList(_context.Goal, "Id", "Id", taskG.GoalId);
+            ViewData["GoalId"] = new SelectList(_context.Goal, "Id", "Name", taskG.GoalId);
             return View(taskG);
         }
 
