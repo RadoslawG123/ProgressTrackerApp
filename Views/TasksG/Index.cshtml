@@ -37,7 +37,10 @@
 @foreach (var item in Model) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.Finish)
+                <form asp-action="ToggleFinish" asp-controller="TasksG" method="post">
+                    <input type="hidden" name="id" value="@item.Id" />
+                    <input type="checkbox" name="finish" onchange="this.form.submit()" @(item.Finish ? "checked" : "")/>
+                </form>
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Name)

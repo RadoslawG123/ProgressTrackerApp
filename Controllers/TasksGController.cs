@@ -26,6 +26,31 @@ namespace ProgressTrackerApp.Controllers
             return View(await applicationDbContext.ToListAsync());
         }
 
+        // POST: TaskG/ToggleFinish
+        public async Task<IActionResult> ToggleFinish(int id)
+        {
+            var taskG = await _context.TaskG.FindAsync(id);
+
+            if (taskG == null)
+            {
+                return NotFound();
+            }
+
+            taskG.Finish = !taskG.Finish;
+            if (taskG.Finish)
+            {
+                taskG.Status = "Finished";
+            }
+            else
+            {
+                taskG.Status = "Unfinished";
+            }
+
+                await _context.SaveChangesAsync();
+
+            return RedirectToAction("Index");
+        }
+
         // GET: TasksG/Details/5
         public async Task<IActionResult> Details(int? id)
         {

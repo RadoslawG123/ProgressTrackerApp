@@ -24,12 +24,22 @@
             </div>
             <div class="form-group">
                 <label asp-for="Priority" class="control-label"></label>
-                <input asp-for="Priority" class="form-control" />
+                <select asp-for="Priority" class="form-control" >
+                    <option value="">--- Select Priority ---</option>
+                    <option value="low">Low</option>
+                    <option value="medium">Medium</option>
+                    <option value="high">High</option>
+                </select>
                 <span asp-validation-for="Priority" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Status" class="control-label"></label>
-                <input asp-for="Status" class="form-control" />
+                <select asp-for="Status" class="form-control">
+                    <option value="">--- Select Status ---</option>
+                    <option value="Not started">Not started</option>
+                    <option value="In progress">In progress</option>
+                    <option value="Finished">Finished</option>
+                </select>
                 <span asp-validation-for="Status" class="text-danger"></span>
             </div>
             <div class="form-group">
