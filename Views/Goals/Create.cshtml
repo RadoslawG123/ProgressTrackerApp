@@ -4,6 +4,30 @@
     ViewData["Title"] = "Create";
 }
 
+@* CHECKING ERRORS 
+@if (!ViewData.ModelState.IsValid)
+{
+    <div style="border: 1px solid red; padding: 10px;">
+        <h3>Błędy walidacji:</h3>
+        <ul>
+            @foreach (var state in ViewData.ModelState)
+            {
+                if (state.Value.Errors.Count > 0)
+                {
+                    <li>
+                        <strong>@state.Key:</strong>
+                        @foreach (var error in state.Value.Errors)
+                        {
+                            <div>@error.ErrorMessage</div>
+                        }
+                    </li>
+                }
+            }
+        </ul>
+    </div>
+} *@
+
+
 <h1>Create</h1>
 
 <h4>Goal</h4>
@@ -24,13 +48,17 @@
             </div>
             <div class="form-group">
                 <label asp-for="Status" class="control-label"></label>
-                <input asp-for="Status" class="form-control" />
+                <select asp-for="Status" class="form-control">
+                    <option value="">--- Select Status ---</option>
+                    <option value="Not started">Not started</option>
+                    <option value="In progress">In progress</option>
+                    <option value="Finished">Finished</option>
+                </select>
                 <span asp-validation-for="Status" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Progress" class="control-label"></label>
-                <input asp-for="Progress" class="form-control" />
-                <span asp-validation-for="Progress" class="text-danger"></span>
+                <input asp-for="Progress" type="hidden" value="0.0"/>
+                <span asp-validation-for="Status" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />

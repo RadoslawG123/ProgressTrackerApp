@@ -12,7 +12,7 @@ using ProgressTrackerApp.Data;
 namespace ProgressTrackerApp.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250730171003_InitialSetup")]
+    [Migration("20250803112841_InitialSetup")]
     partial class InitialSetup
     {
         /// <inheritdoc />
@@ -236,7 +236,6 @@ namespace ProgressTrackerApp.Data.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Description")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
