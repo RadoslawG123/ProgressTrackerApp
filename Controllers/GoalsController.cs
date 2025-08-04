@@ -22,7 +22,11 @@ namespace ProgressTrackerApp.Controllers
         // GET: Goals
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Goal.ToListAsync());
+            var goal = await _context.Goal
+                .Include(g => g.Tasks)
+                .ToListAsync();
+
+            return View(goal);
         }
 
         // GET: Goals/Details/5
@@ -34,6 +38,7 @@ namespace ProgressTrackerApp.Controllers
             }
 
             var goal = await _context.Goal
+                .Include(g => g.Tasks)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (goal == null)
             {

@@ -1,5 +1,6 @@
 ﻿@model ProgressTrackerApp.Models.Goal
 
+
 @{
     ViewData["Title"] = "Details";
 }
@@ -33,6 +34,18 @@
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.Progress)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Tasks)
+        </dt>
+        <dd>
+            @foreach (var task in Model.Tasks)
+            {
+                <ul>
+                    <li>Name: @task.Name</li>
+                    <li>Finish: @task.Finish</li>
+                </ul>
+            }
         </dd>
     </dl>
 </div>
