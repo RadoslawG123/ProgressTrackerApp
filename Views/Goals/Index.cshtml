@@ -22,7 +22,7 @@
                 @Html.DisplayNameFor(model => model.Status)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Progress)
+                @Html.DisplayNameFor(model => model.Progress) %
             </th>
             <th></th>
         </tr>
@@ -40,7 +40,7 @@
                 @Html.DisplayFor(modelItem => item.Status)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Progress)
+                @Html.DisplayFor(modelItem => item.Progress)%
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |

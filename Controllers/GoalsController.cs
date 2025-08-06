@@ -22,11 +22,24 @@ namespace ProgressTrackerApp.Controllers
         // GET: Goals
         public async Task<IActionResult> Index()
         {
-            var goal = await _context.Goal
+            var goals = await _context.Goal
                 .Include(g => g.Tasks)
                 .ToListAsync();
 
-            return View(goal);
+            // Calculating Progress of each Goal
+            foreach (var goal in goals) 
+            {
+                double finishedTasks = 0;
+                foreach (var task in goal.Tasks)
+                {
+                    if (task.Finish == true) {
+                        finishedTasks++;
+                    }
+                }
+                goal.Progress = Math.Round((finishedTasks/goal.Tasks.Count)*100, 1);
+            }
+
+            return View(goals);
         }
 
         // GET: Goals/Details/5
