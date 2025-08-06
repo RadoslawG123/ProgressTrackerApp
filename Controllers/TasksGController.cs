@@ -46,7 +46,7 @@ namespace ProgressTrackerApp.Controllers
                 taskG.Status = "Unfinished";
             }
 
-                await _context.SaveChangesAsync();
+            await _context.SaveChangesAsync();
 
             return RedirectToAction("Index");
         }
@@ -86,6 +86,10 @@ namespace ProgressTrackerApp.Controllers
         {
             if (ModelState.IsValid)
             {
+                if (taskG.Finish) 
+                {
+                    taskG.Status = "Finished";
+                }
                 _context.Add(taskG);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -127,6 +131,10 @@ namespace ProgressTrackerApp.Controllers
             {
                 try
                 {
+                    if (taskG.Finish)
+                    {
+                        taskG.Status = "Finished";
+                    }
                     _context.Update(taskG);
                     await _context.SaveChangesAsync();
                 }

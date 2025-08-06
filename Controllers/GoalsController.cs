@@ -26,7 +26,7 @@ namespace ProgressTrackerApp.Controllers
                 .Include(g => g.Tasks)
                 .ToListAsync();
 
-            // Calculating Progress of each Goal
+            // Calculating Progress for each Goal
             foreach (var goal in goals) 
             {
                 double finishedTasks = 0;
