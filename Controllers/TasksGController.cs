@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.EntityFrameworkCore;
 using ProgressTrackerApp.Data;
 using ProgressTrackerApp.Models;
@@ -20,9 +21,51 @@ namespace ProgressTrackerApp.Controllers
         }
 
         // GET: TasksG
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string sortOrder)
         {
-            var applicationDbContext = _context.TaskG.Include(t => t.Goal);
+            var applicationDbContext = _context.TaskG.Include(t => t.Goal).OrderBy(t => t.Finish);
+
+            // Sort
+            switch (sortOrder)
+            {
+                case "finish":
+                    applicationDbContext = applicationDbContext.OrderBy(t => t.Finish);
+                    break;
+                case "finish_desc":
+                    applicationDbContext = applicationDbContext.OrderByDescending(t => t.Finish);
+                    break;
+                case "name":
+                    applicationDbContext = applicationDbContext.OrderBy(t => t.Name);
+                    break;
+                case "name_desc":
+                    applicationDbContext = applicationDbContext.OrderByDescending(t => t.Name);
+                    break;
+                case "priority":
+                    applicationDbContext = applicationDbContext.OrderBy(t => t.Priority);
+                    break;
+                case "priority_desc":
+                    applicationDbContext = applicationDbContext.OrderByDescending(t => t.Priority);
+                    break;
+                case "status":
+                    applicationDbContext = applicationDbContext.OrderBy(t => t.Status);
+                    break;
+                case "status_desc":
+                    applicationDbContext = applicationDbContext.OrderByDescending(t => t.Status);
+                    break;
+                case "finishDate":
+                    applicationDbContext = applicationDbContext.OrderBy(t => t.FinishDate);
+                    break;
+                case "finishDate_desc":
+                    applicationDbContext = applicationDbContext.OrderByDescending(t => t.FinishDate);
+                    break;
+                case "goal":
+                    applicationDbContext = applicationDbContext.OrderBy(t => t.Goal.Name);
+                    break;
+                case "goal_desc":
+                    applicationDbContext = applicationDbContext.OrderBy(t => t.Goal.Name);
+                    break;
+            }
+
             return View(await applicationDbContext.ToListAsync());
         }
 
