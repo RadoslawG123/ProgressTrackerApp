@@ -13,16 +13,16 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Name)
+                <a asp-action="Index" asp-route-sortOrder="name">@Html.DisplayNameFor(model => model.Name)</a>
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Description)
+                <a asp-action="Index" asp-route-sortOrder="description">@Html.DisplayNameFor(model => model.Description)</a>
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Status)
+                 <a asp-action="Index" asp-route-sortOrder="status">@Html.DisplayNameFor(model => model.Status)</a>
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Progress) %
+                <a asp-action="Index" asp-route-sortOrder="progress"> @Html.DisplayNameFor(model => model.Progress) %</a>
             </th>
             <th></th>
         </tr>

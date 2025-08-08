@@ -1,12 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using ProgressTrackerApp.Data;
 using ProgressTrackerApp.Models;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace ProgressTrackerApp.Controllers
 {
@@ -20,10 +21,11 @@ namespace ProgressTrackerApp.Controllers
         }
 
         // GET: Goals
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string sortOrder)
         {
             var goals = await _context.Goal
                 .Include(g => g.Tasks)
+                .OrderBy(g => g.Name)
                 .ToListAsync();
 
             // Calculating Progress for each Goal
@@ -37,6 +39,23 @@ namespace ProgressTrackerApp.Controllers
                     }
                 }
                 goal.Progress = Math.Round((finishedTasks/goal.Tasks.Count)*100, 1);
+            }
+
+            // Sort
+            switch (sortOrder)
+            {
+                case "name":
+                    goals = goals.OrderBy(g => g.Name).ToList();
+                    break;
+                case "description":
+                    goals = goals.OrderBy(g => g.Description).ToList();
+                    break;
+                case "status":
+                    goals = goals.OrderBy(g => g.Status).ToList();
+                    break;
+                case "progress":
+                    goals = goals.OrderBy(g => g.Progress).ToList();
+                    break;
             }
 
             return View(goals);
