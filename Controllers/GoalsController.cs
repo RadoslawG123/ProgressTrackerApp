@@ -38,7 +38,14 @@ namespace ProgressTrackerApp.Controllers
                         finishedTasks++;
                     }
                 }
-                goal.Progress = Math.Round((finishedTasks/goal.Tasks.Count)*100, 1);
+                if (goal.Tasks.Count != 0)
+                {
+                    goal.Progress = Math.Round((finishedTasks / goal.Tasks.Count) * 100, 1);
+                }
+                else
+                {
+                    goal.Progress = 0.0;
+                }
             }
 
             // Sort
