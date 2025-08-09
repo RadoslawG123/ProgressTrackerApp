@@ -10,6 +10,7 @@ namespace ProgressTrackerApp.Models
         public string Priority { get; set; } = "Low";
         public string Status { get; set; } = "Not started";
         public DateTime? FinishDate { get; set; }
+        public string UserId { get; set; } = null!;
         public int GoalId { get; set; }
         public Goal? Goal { get; set; } = null!;
 
