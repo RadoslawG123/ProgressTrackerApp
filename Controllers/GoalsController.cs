@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
@@ -14,16 +16,21 @@ namespace ProgressTrackerApp.Controllers
     public class GoalsController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private readonly UserManager<ApplicationUser> _userManager;
 
-        public GoalsController(ApplicationDbContext context)
+        public GoalsController(ApplicationDbContext context, UserManager<ApplicationUser> userManager)
         {
             _context = context;
+            _userManager = userManager;
         }
-
+        
         // GET: Goals
         public async Task<IActionResult> Index(string sortOrder)
         {
+            var user = await _userManager.GetUserAsync(User);
+
             var goals = await _context.Goal
+                .Where(g => g.UserId == user.Id)
                 .Include(g => g.Tasks)
                 .OrderBy(g => g.Name)
                 .ToListAsync();
@@ -88,6 +95,7 @@ namespace ProgressTrackerApp.Controllers
         }
 
         // GET: Goals/Create
+        [Authorize]
         public IActionResult Create()
         {
             return View();
@@ -100,6 +108,12 @@ namespace ProgressTrackerApp.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,Name,Description,Status,Progress")] Goal goal)
         {
+            var user = await _userManager.GetUserAsync(User);
+            goal.UserId = user.Id;
+
+            ModelState.Remove(nameof(goal.UserId));
+            ModelState.Remove(nameof(goal.User));
+
             if (ModelState.IsValid)
             {
                 _context.Add(goal);

@@ -22,7 +22,7 @@ namespace ProgressTrackerApp.Controllers
         // GET: Categories
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Categroy.ToListAsync());
+            return View(await _context.Category.ToListAsync());
         }
 
         // GET: Categories/Details/5
@@ -33,7 +33,7 @@ namespace ProgressTrackerApp.Controllers
                 return NotFound();
             }
 
-            var category = await _context.Categroy
+            var category = await _context.Category
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (category == null)
             {
@@ -73,7 +73,7 @@ namespace ProgressTrackerApp.Controllers
                 return NotFound();
             }
 
-            var category = await _context.Categroy.FindAsync(id);
+            var category = await _context.Category.FindAsync(id);
             if (category == null)
             {
                 return NotFound();
@@ -124,7 +124,7 @@ namespace ProgressTrackerApp.Controllers
                 return NotFound();
             }
 
-            var category = await _context.Categroy
+            var category = await _context.Category
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (category == null)
             {
@@ -139,10 +139,10 @@ namespace ProgressTrackerApp.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var category = await _context.Categroy.FindAsync(id);
+            var category = await _context.Category.FindAsync(id);
             if (category != null)
             {
-                _context.Categroy.Remove(category);
+                _context.Category.Remove(category);
             }
 
             await _context.SaveChangesAsync();
@@ -151,7 +151,7 @@ namespace ProgressTrackerApp.Controllers
 
         private bool CategoryExists(int id)
         {
-            return _context.Categroy.Any(e => e.Id == id);
+            return _context.Category.Any(e => e.Id == id);
         }
     }
 }

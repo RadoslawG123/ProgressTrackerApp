@@ -48,7 +48,7 @@ namespace ProgressTrackerApp.Controllers
         // GET: Habits/Create
         public IActionResult Create()
         {
-            ViewData["CategoryId"] = new SelectList(_context.Categroy, "Id", "Id");
+            ViewData["CategoryId"] = new SelectList(_context.Category, "Id", "Id");
             return View();
         }
 
@@ -65,7 +65,7 @@ namespace ProgressTrackerApp.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["CategoryId"] = new SelectList(_context.Categroy, "Id", "Id", habit.CategoryId);
+            ViewData["CategoryId"] = new SelectList(_context.Category, "Id", "Id", habit.CategoryId);
             return View(habit);
         }
 
@@ -82,7 +82,7 @@ namespace ProgressTrackerApp.Controllers
             {
                 return NotFound();
             }
-            ViewData["CategoryId"] = new SelectList(_context.Categroy, "Id", "Id", habit.CategoryId);
+            ViewData["CategoryId"] = new SelectList(_context.Category, "Id", "Id", habit.CategoryId);
             return View(habit);
         }
 
@@ -118,7 +118,7 @@ namespace ProgressTrackerApp.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["CategoryId"] = new SelectList(_context.Categroy, "Id", "Id", habit.CategoryId);
+            ViewData["CategoryId"] = new SelectList(_context.Category, "Id", "Id", habit.CategoryId);
             return View(habit);
         }
 

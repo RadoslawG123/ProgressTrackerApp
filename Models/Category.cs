@@ -5,6 +5,7 @@
         public int Id { get; set; }
         public string Name { get; set; } = null!;
         public string UserId { get; set; } = null!;
+        public ApplicationUser User { get; set; }
         public ICollection<Habit> Habits { get; set; } = new List<Habit>();
 
         public Category()

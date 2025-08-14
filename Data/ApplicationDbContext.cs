@@ -12,7 +12,7 @@ namespace ProgressTrackerApp.Data
         }
         public DbSet<ProgressTrackerApp.Models.Goal> Goal { get; set; } = default!;
         public DbSet<ProgressTrackerApp.Models.TaskG> TaskG { get; set; } = default!;
-        public DbSet<ProgressTrackerApp.Models.Category> Categroy { get; set; } = default!;
+        public DbSet<ProgressTrackerApp.Models.Category> Category { get; set; } = default!;
         public DbSet<ProgressTrackerApp.Models.Habit> Habit { get; set; } = default!;
         public DbSet<ProgressTrackerApp.Models.HabitCompletion> HabitCompletion { get; set; } = default!;
     }
