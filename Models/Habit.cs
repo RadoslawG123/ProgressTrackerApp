@@ -1,4 +1,6 @@
-﻿namespace ProgressTrackerApp.Models
+﻿using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
+
+namespace ProgressTrackerApp.Models
 {
     public class Habit
     {
@@ -9,7 +11,9 @@
         public bool Visibility { get; set; }
         public int? CategoryId { get; set; }
         public Category? Category { get; set; } = null!;
+        [ValidateNever]
         public string UserId { get; set; } = null!;
+        [ValidateNever]
         public ApplicationUser User { get; set; }
         public ICollection<HabitCompletion> Completions { get; set; } = new List<HabitCompletion>();
 

@@ -54,6 +54,10 @@
                 <span asp-validation-for="GoalId" class="text-danger"></span>
             </div>
             <div class="form-group">
+                <input asp-for="UserId" type="hidden" value="@Model.UserId" />
+                <span asp-validation-for="UserId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
                 <input type="submit" value="Edit" class="btn btn-primary" />
             </div>
         </form>

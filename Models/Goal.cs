@@ -1,4 +1,5 @@
-﻿using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.General;
+﻿using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
+using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.General;
 
 namespace ProgressTrackerApp.Models
 {
@@ -9,7 +10,9 @@ namespace ProgressTrackerApp.Models
         public string? Description { get; set; } = string.Empty;
         public string Status { get; set; } = string.Empty;
         public double Progress { get; set; } = 0.0;
+        [ValidateNever]
         public string UserId { get; set; } = null!;
+        [ValidateNever]
         public ApplicationUser User { get; set; }
         public ICollection<TaskG> Tasks { get; set; } = new List<TaskG>();
 

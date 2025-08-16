@@ -34,7 +34,11 @@
             </div>
             <div class="form-group">
                 <input asp-for="Progress" type="hidden" value="@Model.Progress" />
-                <span asp-validation-for="Status" class="text-danger"></span>
+                <span asp-validation-for="Progress" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input asp-for="UserId" type="hidden" value="@Model.UserId" />
+                <span asp-validation-for="UserId" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Edit" class="btn btn-primary" />

@@ -95,7 +95,6 @@ namespace ProgressTrackerApp.Controllers
         }
 
         // GET: Goals/Create
-        [Authorize]
         public IActionResult Create()
         {
             return View();
@@ -110,9 +109,6 @@ namespace ProgressTrackerApp.Controllers
         {
             var user = await _userManager.GetUserAsync(User);
             goal.UserId = user.Id;
-
-            ModelState.Remove(nameof(goal.UserId));
-            ModelState.Remove(nameof(goal.User));
 
             if (ModelState.IsValid)
             {
@@ -144,7 +140,7 @@ namespace ProgressTrackerApp.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Description,Status,Progress")] Goal goal)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Description,Status,Progress,UserId")] Goal goal)
         {
             if (id != goal.Id)
             {

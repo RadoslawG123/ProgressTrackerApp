@@ -1,30 +1,39 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.EntityFrameworkCore;
 using ProgressTrackerApp.Data;
 using ProgressTrackerApp.Models;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace ProgressTrackerApp.Controllers
 {
     public class TasksGController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private readonly UserManager<ApplicationUser> _userManager;
 
-        public TasksGController(ApplicationDbContext context)
+        public TasksGController(ApplicationDbContext context, UserManager<ApplicationUser> userManager)
         {
             _context = context;
+            _userManager = userManager;
         }
 
         // GET: TasksG
         public async Task<IActionResult> Index(string sortOrder)
         {
-            var applicationDbContext = _context.TaskG.Include(t => t.Goal).OrderBy(t => t.Finish);
+            // Find User
+            var user = await _userManager.GetUserAsync(User);
+
+            var applicationDbContext = _context.TaskG
+                .Where(g => g.UserId == user.Id)
+                .Include(t => t.Goal)
+                .OrderBy(t => t.Finish);
 
             // Sort
             switch (sortOrder)
@@ -115,9 +124,12 @@ namespace ProgressTrackerApp.Controllers
         }
 
         // GET: TasksG/Create
-        public IActionResult Create()
+        public async Task<IActionResult> Create()
         {
-            ViewData["GoalId"] = new SelectList(_context.Goal, "Id", "Name");
+            // Find User
+            var user = await _userManager.GetUserAsync(User);
+
+            ViewData["GoalId"] = new SelectList(_context.Goal.Where(g => g.UserId == user.Id), "Id", "Name");
             return View();
         }
 
@@ -128,6 +140,10 @@ namespace ProgressTrackerApp.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,Finish,Name,Priority,Status,FinishDate,GoalId")] TaskG taskG)
         {
+            // Find User
+            var user = await _userManager.GetUserAsync(User);
+            taskG.UserId = user.Id;
+
             if (ModelState.IsValid)
             {
                 if (taskG.Finish) 
@@ -145,6 +161,9 @@ namespace ProgressTrackerApp.Controllers
         // GET: TasksG/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
+            // Find User
+            var user = await _userManager.GetUserAsync(User);
+
             if (id == null)
             {
                 return NotFound();
@@ -155,7 +174,7 @@ namespace ProgressTrackerApp.Controllers
             {
                 return NotFound();
             }
-            ViewData["GoalId"] = new SelectList(_context.Goal, "Id", "Name", taskG.GoalId);
+            ViewData["GoalId"] = new SelectList(_context.Goal.Where(g => g.UserId == user.Id), "Id", "Name", taskG.GoalId);
             return View(taskG);
         }
 
@@ -164,8 +183,11 @@ namespace ProgressTrackerApp.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Finish,Name,Priority,Status,FinishDate,GoalId")] TaskG taskG)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Finish,Name,Priority,Status,FinishDate,GoalId,UserId")] TaskG taskG)
         {
+            // Find User
+            var user = await _userManager.GetUserAsync(User);
+
             if (id != taskG.Id)
             {
                 return NotFound();

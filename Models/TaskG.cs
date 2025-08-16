@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ProgressTrackerApp.Models
 {
@@ -10,7 +11,9 @@ namespace ProgressTrackerApp.Models
         public string Priority { get; set; } = "Low";
         public string Status { get; set; } = "Not started";
         public DateTime? FinishDate { get; set; }
+        [ValidateNever]
         public string UserId { get; set; } = null!;
+        [ValidateNever]
         public ApplicationUser User { get; set; }
         public int GoalId { get; set; }
         public Goal? Goal { get; set; } = null!;
