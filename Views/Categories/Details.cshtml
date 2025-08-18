@@ -16,11 +16,16 @@
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.Name)
         </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.UserId)
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Habits)
         </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.UserId)
+        <dd>
+            @foreach (var habit in Model.Habits)
+            {
+                <ul>
+                    <li>Name: @habit.Name</li>
+                </ul>
+            }
         </dd>
     </dl>
 </div>

@@ -4,7 +4,7 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
+<h1>Habits</h1>
 
 <p>
     <a asp-action="Create">Create New</a>
@@ -13,22 +13,19 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Name)
+                <a asp-action="Index" asp-route-sortOrder="name">@Html.DisplayNameFor(model => model.Name)</a>
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Description)
+                <a asp-action="Index" asp-route-sortOrder="description">@Html.DisplayNameFor(model => model.Description)</a>
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.IsActive)
+                <a asp-action="Index" asp-route-sortOrder="isActive">@Html.DisplayNameFor(model => model.IsActive)</a>
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Visibility)
+                <a asp-action="Index" asp-route-sortOrder="visibility"> @Html.DisplayNameFor(model => model.Visibility)</a>
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Category)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.UserId)
+                <a asp-action="Index" asp-route-sortOrder="category"> @Html.DisplayNameFor(model => model.Category)</a>
             </th>
             <th></th>
         </tr>
@@ -49,10 +46,7 @@
                 @Html.DisplayFor(modelItem => item.Visibility)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Category.Id)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.UserId)
+                @Html.DisplayFor(modelItem => item.Category.Name)
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |

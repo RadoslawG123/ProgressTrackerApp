@@ -27,6 +27,7 @@ namespace ProgressTrackerApp.Controllers
         // GET: Goals
         public async Task<IActionResult> Index(string sortOrder)
         {
+            // Find User
             var user = await _userManager.GetUserAsync(User);
 
             var goals = await _context.Goal
@@ -107,6 +108,7 @@ namespace ProgressTrackerApp.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,Name,Description,Status,Progress")] Goal goal)
         {
+            // Find User
             var user = await _userManager.GetUserAsync(User);
             goal.UserId = user.Id;
 

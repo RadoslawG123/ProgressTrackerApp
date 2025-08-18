@@ -1,28 +1,47 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using ProgressTrackerApp.Data;
 using ProgressTrackerApp.Models;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace ProgressTrackerApp.Controllers
 {
     public class CategoriesController : Controller
     {
         private readonly ApplicationDbContext _context;
-
-        public CategoriesController(ApplicationDbContext context)
+        private readonly UserManager<ApplicationUser> _userManager;
+        public CategoriesController(ApplicationDbContext context, UserManager<ApplicationUser> userManager)
         {
             _context = context;
+            _userManager = userManager;
         }
 
         // GET: Categories
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string sortOrder)
         {
-            return View(await _context.Category.ToListAsync());
+            // Find User
+            var user = await _userManager.GetUserAsync(User);
+
+            var categories = await _context.Category
+                .Where(c => c.UserId == user.Id)
+                .Include(c => c.Habits)
+                .OrderBy(c => c.Name)
+                .ToListAsync();
+
+            // Sort
+            switch (sortOrder)
+            {
+                case "name":
+                    categories = categories.OrderBy(c => c.Name).ToList();
+                    break;
+            }
+
+            return View(categories);
         }
 
         // GET: Categories/Details/5
@@ -34,6 +53,7 @@ namespace ProgressTrackerApp.Controllers
             }
 
             var category = await _context.Category
+                .Include(g => g.Habits)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (category == null)
             {
@@ -54,8 +74,12 @@ namespace ProgressTrackerApp.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,UserId")] Category category)
+        public async Task<IActionResult> Create([Bind("Id,Name")] Category category)
         {
+            // Find User
+            var user = await _userManager.GetUserAsync(User);
+            category.UserId = user.Id;
+
             if (ModelState.IsValid)
             {
                 _context.Add(category);
