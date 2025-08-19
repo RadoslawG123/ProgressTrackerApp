@@ -6,7 +6,7 @@ namespace ProgressTrackerApp.Models
     {
         public int Id { get; set; }
         public int HabitId { get; set; }
-        public Habit Habit { get; set; } = null!;
+        public Habit? Habit { get; set; } = null!;
         [ValidateNever]
         public string UserId { get; set; } = null!;
         [ValidateNever]
