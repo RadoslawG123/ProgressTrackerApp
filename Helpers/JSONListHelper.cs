@@ -10,10 +10,12 @@
                 var myHabit = new Event()
                 {
                     id = habit.Id,
+                    title = habit.Habit.Name,
                     start = habit.Date,
-                    end = habit.Date,
-                    //resourceId = 
-                    description = habit.Habit.Description
+                    allDay = true,
+                    backgroundColor = "green",
+                    borderColor = "green",
+                    //description = habit.Habit.Description
                 };
                 habitList.Add(myHabit);
             }
@@ -24,10 +26,12 @@
     public class Event
     {
         public int id { get; set; }
+        public string title { get; set; }
         public DateTime start { get; set; }
-        public DateTime end { get; set; }
-        //public string resourceId { get; set; }
-        public string description { get; set; }
+        public bool allDay { get; set; }
+        public string backgroundColor { get; set; }
+        public string borderColor { get; set; }
+        //public string description { get; set; }
     }
 
     public class Resource 

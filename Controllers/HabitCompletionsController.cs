@@ -32,9 +32,11 @@ public class HabitCompletionsController : Controller
     }
 
     // GET: HabitCompletions/Create
-    public IActionResult Create()
+    [HttpGet]
+    public IActionResult Create(string date)
     {
         ViewData["HabitId"] = new SelectList(_context.Habit, "Id", "Name");
+        ViewData["HabitDate"] = DateTime.Parse(date).ToString("yyyy-MM-dd");
         return View();
     }
 
@@ -46,6 +48,8 @@ public class HabitCompletionsController : Controller
         // Find User
         var user = await _userManager.GetUserAsync(User);
         habitCompletion.UserId = user.Id;
+
+
 
         habitCompletion.Habit = _context.Habit.FirstOrDefault(h => h.Id == habitCompletion.HabitId);
 
