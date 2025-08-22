@@ -57,7 +57,7 @@ public class HabitCompletionsController : Controller
         {
             _context.Add(habitCompletion);
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction("Index", "Calendar", new { redirectionDate = habitCompletion.Date.ToString("yyyy-MM-dd") });
         }
         ViewData["HabitId"] = new SelectList(_context.Habit, "Id", "Name", habitCompletion.HabitId);
         return View(habitCompletion);
