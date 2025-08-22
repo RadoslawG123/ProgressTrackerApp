@@ -14,9 +14,6 @@
         initialDate: "@ViewBag.RedirectionDate",
         events: @Html.Raw(ViewData["Habits"]),
         dateClick: function(info) {
-           const [month, day, year] = [
-            info.getMonth()
-      ]
             window.location.href = `/HabitCompletions/Create?date=${info.dateStr}`;
         }
       });
