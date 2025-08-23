@@ -13,8 +13,8 @@
                     title = habit.Habit.Name,
                     start = habit.Date,
                     allDay = true,
-                    backgroundColor = "green",
-                    borderColor = "green",
+                    color = habit.Habit.BackgroundColor,
+                    textColor = habit.Habit.TextColor
                     //description = habit.Habit.Description
                 };
                 habitList.Add(myHabit);
@@ -29,8 +29,8 @@
         public string title { get; set; }
         public DateTime start { get; set; }
         public bool allDay { get; set; }
-        public string backgroundColor { get; set; }
-        public string borderColor { get; set; }
+        public string color { get; set; }
+        public string textColor { get; set; }
         //public string description { get; set; }
     }
 

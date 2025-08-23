@@ -9,6 +9,8 @@ namespace ProgressTrackerApp.Models
         public string? Description { get; set; } = string.Empty;
         public bool IsActive { get; set; }
         public bool Visibility { get; set; }
+        public string? BackgroundColor { get; set; }
+        public string? TextColor { get; set; }
         public int? CategoryId { get; set; }
         public Category? Category { get; set; } = null!;
         [ValidateNever]

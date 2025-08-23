@@ -39,6 +39,9 @@ namespace ProgressTrackerApp.Controllers
                 case "name":
                     categories = categories.OrderBy(c => c.Name).ToList();
                     break;
+                case "color":
+                    categories = categories.OrderBy(c => c.Name).ToList();
+                    break;
             }
 
             return View(categories);
@@ -110,7 +113,7 @@ namespace ProgressTrackerApp.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,UserId")] Category category)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,BackgroundColor,TextColor,UserId")] Category category)
         {
             if (id != category.Id)
             {

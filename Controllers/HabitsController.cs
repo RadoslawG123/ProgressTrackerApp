@@ -49,6 +49,9 @@ namespace ProgressTrackerApp.Controllers
                 case "visibility":
                     habits = habits.OrderBy(h => h.Visibility).ToList();
                     break;
+                case "color":
+                    habits = habits.OrderBy(h => h.BackgroundColor).ToList();
+                    break;
                 case "category":
                     // Sorting with null categories
                     List<Habit> habitsWithCategory = new List<Habit>();
@@ -107,7 +110,7 @@ namespace ProgressTrackerApp.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,Description,IsActive,Visibility,CategoryId")] Habit habit)
+        public async Task<IActionResult> Create([Bind("Id,Name,Description,IsActive,Visibility,BackgroundColor,TextColor,CategoryId")] Habit habit)
         {
             // Find User
             var user = await _userManager.GetUserAsync(User);
