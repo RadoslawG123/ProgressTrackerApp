@@ -24,6 +24,7 @@ namespace ProgressTrackerApp.Controllers
             ViewData["Habits"] = JSONListHelper.GetHabitListJSONString( 
                 _context.HabitCompletion
                 .Include(h => h.Habit)
+                .Where(h => h.Habit.Visibility == true)
                 .ToList() 
                 );
 

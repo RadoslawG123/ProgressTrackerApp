@@ -79,6 +79,22 @@ namespace ProgressTrackerApp.Controllers
             return View(habits);
         }
 
+        // POST: Habits/ToggleVisibility
+        public async Task<IActionResult> ToggleVisibility(int id)
+        {
+            var habit = await _context.Habit.FindAsync(id);
+
+            if (habit == null)
+            {
+                return NotFound();
+            }
+
+            habit.Visibility = !habit.Visibility;
+            await _context.SaveChangesAsync();
+
+            return RedirectToAction("Index");
+        }
+
         // GET: Habits/Details/5
         public async Task<IActionResult> Details(int? id)
         {

@@ -24,6 +24,7 @@
         eventDrop: function(info) {
                 let start = info.event.start;
 
+                // Transformating Date to correct type
                 let data = {
                     Id: info.event.id,
                     Date: start.getFullYear() + "-" +
@@ -45,6 +46,22 @@
                     info.revert(); // cofa przesunięcie w kalendarzu
                     }
                   });
+        },
+        customButtons: {
+            habitButton: {
+                text: 'Habits',
+                click: function(){
+                     window.location.href = `/Habits`;
+                }
+            },
+            categoryButton {
+                text: 'Category'
+            },
+        },
+        headerToolbar: {
+            left: 'title',
+            center: '',
+            right: 'habitButton today prev,next'
         }
       });
 

@@ -23,7 +23,6 @@
             </th>
             <th>
                 <a asp-action="Index" asp-route-sortOrder="visibility"> @Html.DisplayNameFor(model => model.Visibility)</a>
-            </th>
             <th>
                 <a asp-action="Index" asp-route-sortOrder="color"> @Html.DisplayNameFor(model => model.BackgroundColor)</a>
             </th>
@@ -46,7 +45,10 @@
                 @Html.DisplayFor(modelItem => item.IsActive)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Visibility)
+                <form asp-action="ToggleVisibility" asp-controller="Habits" method="post">
+                    <input type="hidden" name="id" value="@item.Id" />
+                        <input type="checkbox" name="visibility" onchange="this.form.submit()" @(item.Visibility ? "checked" : "") />
+                </form>
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.BackgroundColor)
