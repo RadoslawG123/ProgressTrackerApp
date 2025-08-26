@@ -1,4 +1,6 @@
-﻿namespace ProgressTrackerApp.Helpers
+﻿using ProgressTrackerApp.Models;
+
+namespace ProgressTrackerApp.Helpers
 {
     public class JSONListHelper
     {
@@ -21,6 +23,21 @@
             }
             return System.Text.Json.JsonSerializer.Serialize(habitList);
         }
+
+        public static string GetCategoriesListJSONString(List<Models.Category> categories)
+        {
+            var categoryList = new List<CategoryViewModel>();
+            foreach (var category in categories)
+            {
+                var myCategory = new CategoryViewModel()
+                {
+                    Id = category.Id,
+                    Name = category.Name
+                };
+                categoryList.Add(myCategory);
+            }
+            return System.Text.Json.JsonSerializer.Serialize(categoryList);
+        }
     }
 
     public class Event
@@ -34,9 +51,15 @@
         //public string description { get; set; }
     }
 
-    public class Resource 
+    public class CategoryViewModel
     {
-        public int id { get; set; }
-        public string title { get; set; }
+        public int Id { get; set; }
+        public string Name { get; set; }
     }
+
+    //public class Resource 
+    //{
+    //    public int id { get; set; }
+    //    public string title { get; set; }
+    //}
 }

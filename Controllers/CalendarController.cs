@@ -28,6 +28,12 @@ namespace ProgressTrackerApp.Controllers
                 .ToList() 
                 );
 
+            // Categories to show
+            ViewData["Categories"] = JSONListHelper.GetCategoriesListJSONString(
+                _context.Category
+                .ToList()
+                );
+
             // Current page date of the calendar
             ViewData["RedirectionDate"] = string.IsNullOrEmpty(redirectionDate) ? DateTime.Today.ToString("yyyy-MM-dd") : redirectionDate;
             return View();

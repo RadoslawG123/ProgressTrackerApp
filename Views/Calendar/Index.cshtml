@@ -1,77 +1,18 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
+﻿@{
     
 }
+
+<script>
+    var habits = @Html.Raw(ViewData["Habits"]);
+    var categories = @Html.Raw(ViewData["Categories"]);
+    var redirectionDate = '@Html.Raw(ViewData["RedirectionDate"])';
+</script>
 
 <script src="~/js/Calendar/main/index.global.min.js"></script>
 <script src="~/js/Calendar/interaction/index.global.min.js"></script>
 <script src="~/js/Calendar/daygrid/index.global.min.js"></script>
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-      let calendarEl = document.getElementById('calendar');
 
-      let calendar = new FullCalendar.Calendar(calendarEl, {
-        initialView: 'dayGridMonth',
-        initialDate: "@ViewBag.RedirectionDate",
-        events: @Html.Raw(ViewData["Habits"]),
-        dateClick: function(info) {
-          window.location.href = `/HabitCompletions/Create?date=${info.dateStr}`;
-        },
-        editable: true,
-        droppable: true,
-        eventDrop: function(info) {
-                let start = info.event.start;
-
-                // Transformating Date to correct type
-                let data = {
-                    Id: info.event.id,
-                    Date: start.getFullYear() + "-" +
-                        String(start.getMonth() + 1).padStart(2, '0') + "-" +
-                        String(start.getDate()).padStart(2, '0')
-                };
-
-                  fetch('/Calendar/Save', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify(data)
-                  })
-                    .then(response => {
-                        console.log("Odpowiedź z serwera:", response)
-                    if (!response.ok) {
-                    alert("Błąd podczas zapisu nowej daty.");
-                    info.revert(); // cofa przesunięcie w kalendarzu
-                    }
-                  });
-        },
-        customButtons: {
-            habitButton: {
-                text: 'Habits',
-                click: function(){
-                     window.location.href = `/Habits`;
-                }
-            },
-            categoryButton {
-                text: 'Category'
-            },
-        },
-        headerToolbar: {
-            left: 'title',
-            center: '',
-            right: 'habitButton today prev,next'
-        }
-      });
-
-      calendar.render();
-
-      // let draggableEl = document.getElementById('mydraggable');
-      // if (draggableEl) {
-      //   new FullCalendar.Draggable(draggableEl);
-      // }
-    });
-</script>
+<script type="module" src="~/js/categoriesDropdown.js"></script>
+<script type="module" src="~/js/calendar.js"></script>
 
 <div id='calendar'></div>
