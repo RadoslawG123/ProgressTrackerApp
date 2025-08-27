@@ -11,14 +11,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
     let html = `
         <div class="dropdown">
-            <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown">
+            <a class="btn btn-primary dropdown-toggle" type="button" data-bs-toggle="dropdown">
                 Categories
-            </button>
-            <ul class="dropdown-menu">`;
+            </a>
+            <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="#" data-cat-id="">
+                Ignore Categories
+            </a></li>`;
 
     categories.forEach(cat => {
         html += `
-            <li><a class="dropdown-item" href="#" data-cat-id="${cat.id}">
+            <li><a class="dropdown-item" href="#" data-cat-id="${cat.Id}">
                 ${cat.Name}
             </a></li>`;
     });
@@ -30,6 +33,7 @@ document.addEventListener('DOMContentLoaded', () => {
         item.addEventListener('click', e => {
             e.preventDefault();
             const catId = e.currentTarget.getAttribute('data-cat-id');
+            window.location.href = `/Calendar?redirectionDate=${redirectionDate}&catId=${catId}`;
         });
     });
 })

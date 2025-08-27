@@ -18,16 +18,32 @@ namespace ProgressTrackerApp.Controllers
             _context = context;
             _userManager = userManager;
         }
-        public IActionResult Index(string redirectionDate)
-        {
-            // Habits to show
-            ViewData["Habits"] = JSONListHelper.GetHabitListJSONString( 
-                _context.HabitCompletion
-                .Include(h => h.Habit)
-                .Where(h => h.Habit.Visibility == true)
-                .ToList() 
-                );
 
+        [HttpGet]
+        public IActionResult Index(string redirectionDate, int? catId)
+        {
+            if (catId != null)
+            {
+                // Habits to show
+                ViewData["Habits"] = JSONListHelper.GetHabitListJSONString(
+                    _context.HabitCompletion
+                    .Include(h => h.Habit)
+                    .Where(h => h.Habit.Visibility == true)
+                    .Where(h => h.Habit.CategoryId == catId)
+                    .ToList()
+                    );
+            }
+            else
+            {
+                // Habits to show
+                ViewData["Habits"] = JSONListHelper.GetHabitListJSONString(
+                    _context.HabitCompletion
+                    .Include(h => h.Habit)
+                    .Where(h => h.Habit.Visibility == true)
+                    .ToList()
+                    );
+
+            }
             // Categories to show
             ViewData["Categories"] = JSONListHelper.GetCategoriesListJSONString(
                 _context.Category
