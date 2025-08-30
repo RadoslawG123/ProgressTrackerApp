@@ -45,11 +45,15 @@
                 text: '',
                 click: function () {}
             },
+            categoryColorsButton: {
+                text: 'Toggle',
+                click: function () {}
+            },
         },
         headerToolbar: {
             left: 'title',
             center: '',
-            right: 'categoryButton habitButton today prev,next'
+            right: 'categoryColorsButton categoryButton habitButton today prev,next'
         }
     });
 

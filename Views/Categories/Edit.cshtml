@@ -19,6 +19,16 @@
                 <span asp-validation-for="Name" class="text-danger"></span>
             </div>
             <div class="form-group">
+                <label asp-for="BackgroundColor" class="control-label"></label>
+                <input type="color" asp-for="BackgroundColor" class="form-control form-control-color" value="#3788d8" />
+                <span asp-validation-for="BackgroundColor" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TextColor" class="control-label"></label>
+                <input type="color" asp-for="TextColor" class="form-control form-control-color" value="#FFFFFF" />
+                <span asp-validation-for="TextColor" class="text-danger"></span>
+            </div>
+            <div class="form-group">
                 <input asp-for="UserId" type="hidden" value="@Model.UserId" />
                 <span asp-validation-for="UserId" class="text-danger"></span>
             </div>

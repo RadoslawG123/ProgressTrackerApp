@@ -5,6 +5,25 @@ document.addEventListener('DOMContentLoaded', () => {
     const calendar = initCalendar('calendar', habits, redirectionDate);
     calendar.render()
 
+    const categoryColorsBtn = document.querySelector('.fc-categoryColorsButton-button');
+    if (!categoryColorsBtn || !categories) return;
+
+    categoryColorsBtn.addEventListener('click', e => {
+        calendar.getEvents().forEach((event) => {
+            if (event.extendedProps.categoryId != null) {
+                categories.forEach((category) => {
+                    console.log("Category", category)
+                    console.log("Category background color", category.BackgroundColor);
+                    if (event.extendedProps.categoryId == category.Id) {
+                        event.setProp("color", category.BackgroundColor);
+                        event.setProp("textColor", category.TextColor);
+                    }
+                });
+            }
+        });
+    })
+    
+
     // Replace button to dropdown with categories
     const btn = document.querySelector('.fc-categoryButton-button');
     if (!btn || !categories) return;

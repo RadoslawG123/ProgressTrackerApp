@@ -7,7 +7,7 @@ namespace ProgressTrackerApp.Helpers
         public static string GetHabitListJSONString(List<Models.HabitCompletion> habits)
         {
             var habitList = new List<Event>();
-            foreach (var habit in habits) 
+            foreach (var habit in habits)
             {
                 var myHabit = new Event()
                 {
@@ -16,8 +16,11 @@ namespace ProgressTrackerApp.Helpers
                     start = habit.Date,
                     allDay = true,
                     color = habit.Habit.BackgroundColor,
-                    textColor = habit.Habit.TextColor
-                    //description = habit.Habit.Description
+                    textColor = habit.Habit.TextColor,
+                    extendedProps = new Dictionary<string, int?>
+                        {
+                            { "categoryId", habit.Habit.CategoryId }
+                        }
                 };
                 habitList.Add(myHabit);
             }
@@ -32,7 +35,9 @@ namespace ProgressTrackerApp.Helpers
                 var myCategory = new CategoryViewModel()
                 {
                     Id = category.Id,
-                    Name = category.Name
+                    Name = category.Name,
+                    BackgroundColor = category.BackgroundColor,
+                    TextColor = category.TextColor
                 };
                 categoryList.Add(myCategory);
             }
@@ -48,18 +53,14 @@ namespace ProgressTrackerApp.Helpers
         public bool allDay { get; set; }
         public string color { get; set; }
         public string textColor { get; set; }
-        //public string description { get; set; }
+        public Dictionary<string, int?> extendedProps { get; set; }
     }
 
     public class CategoryViewModel
     {
         public int Id { get; set; }
         public string Name { get; set; }
+        public string BackgroundColor { get; set; }
+        public string TextColor { get; set; }
     }
-
-    //public class Resource 
-    //{
-    //    public int id { get; set; }
-    //    public string title { get; set; }
-    //}
 }
