@@ -47,7 +47,15 @@
             },
             categoryColorsButton: {
                 text: 'Toggle',
-                click: function () {}
+                click: function ()
+                {
+                    //console.log(categoryColors);
+                    //if (categoryColors) {
+                    //    self.customButtons.categoryColorsButton.text = "Habit Colors";
+                    //} else {
+                    //    self.customButtons.categoryColorsButton.text = "Category Colors";
+                    //}
+                }
             },
         },
         headerToolbar: {

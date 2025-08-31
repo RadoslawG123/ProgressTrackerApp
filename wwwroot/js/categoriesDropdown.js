@@ -5,26 +5,35 @@ document.addEventListener('DOMContentLoaded', () => {
     const calendar = initCalendar('calendar', habits, redirectionDate);
     calendar.render()
 
+    // CategoryColorsButton - changes colors of habits based on their colors attached to categories
     const categoryColorsBtn = document.querySelector('.fc-categoryColorsButton-button');
     if (!categoryColorsBtn || !categories) return;
 
     categoryColorsBtn.addEventListener('click', e => {
+        var categoryColorsChecker = false;
         calendar.getEvents().forEach((event) => {
-            if (event.extendedProps.categoryId != null) {
+            if (event.extendedProps.CategoryId != null) {
                 categories.forEach((category) => {
-                    console.log("Category", category)
-                    console.log("Category background color", category.BackgroundColor);
-                    if (event.extendedProps.categoryId == category.Id) {
+                    if (event.extendedProps.CategoryId == category.Id && !categoryColors) {
+                        categoryColorsChecker = true;
                         event.setProp("color", category.BackgroundColor);
                         event.setProp("textColor", category.TextColor);
+                    }
+                    else if ((event.extendedProps.CategoryId == category.Id && categoryColors)) {
+                        event.setProp("color", event.extendedProps.HabitColorShelf);
+                        event.setProp("textColor", event.extendedProps.HabitTextColorShelf);
                     }
                 });
             }
         });
+        if (categoryColorsChecker) {
+            categoryColors = true;
+        } else {
+            categoryColors = false;
+        }
     })
     
-
-    // Replace button to dropdown with categories
+    // CateoryButton - Replace button to dropdown with categories
     const btn = document.querySelector('.fc-categoryButton-button');
     if (!btn || !categories) return;
 

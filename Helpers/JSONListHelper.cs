@@ -17,10 +17,12 @@ namespace ProgressTrackerApp.Helpers
                     allDay = true,
                     color = habit.Habit.BackgroundColor,
                     textColor = habit.Habit.TextColor,
-                    extendedProps = new Dictionary<string, int?>
-                        {
-                            { "categoryId", habit.Habit.CategoryId }
-                        }
+                    extendedProps = new ExtendedEventProps()
+                    {
+                        HabitColorShelf = habit.Habit.BackgroundColor,
+                        HabitTextColorShelf = habit.Habit.TextColor,
+                        CategoryId = habit.Habit.CategoryId
+                    }
                 };
                 habitList.Add(myHabit);
             }
@@ -53,7 +55,14 @@ namespace ProgressTrackerApp.Helpers
         public bool allDay { get; set; }
         public string color { get; set; }
         public string textColor { get; set; }
-        public Dictionary<string, int?> extendedProps { get; set; }
+        public ExtendedEventProps extendedProps { get; set; }
+    }
+
+    public class ExtendedEventProps
+    {
+        public string HabitColorShelf { get; set; }
+        public string HabitTextColorShelf { get; set; }
+        public int? CategoryId { get; set; }
     }
 
     public class CategoryViewModel
