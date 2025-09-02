@@ -83,6 +83,16 @@ namespace ProgressTrackerApp.Controllers
             var user = await _userManager.GetUserAsync(User);
             category.UserId = user.Id;
 
+            // If user did not choose colors they will be setted as default colors
+            if (category.BackgroundColor == null)
+            {
+                category.BackgroundColor = "#3788d8";
+            }
+            if (category.TextColor == null)
+            {
+                category.TextColor = "#FFFFFF";
+            }
+
             if (ModelState.IsValid)
             {
                 _context.Add(category);

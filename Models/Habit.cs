@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
+using System.ComponentModel.DataAnnotations;
 
 namespace ProgressTrackerApp.Models
 {
@@ -9,8 +10,11 @@ namespace ProgressTrackerApp.Models
         public string? Description { get; set; } = string.Empty;
         public bool IsActive { get; set; }
         public bool Visibility { get; set; }
+        [Display(Name = "Background Color")]
         public string? BackgroundColor { get; set; }
+        [Display(Name = "Text Color")]
         public string? TextColor { get; set; }
+        [Display(Name = "Category")]
         public int? CategoryId { get; set; }
         public Category? Category { get; set; } = null!;
         [ValidateNever]

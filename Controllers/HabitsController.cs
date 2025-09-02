@@ -115,9 +115,16 @@ namespace ProgressTrackerApp.Controllers
         }
 
         // GET: Habits/Create
-        public IActionResult Create()
+        public async Task<IActionResult> Create()
         {
-            ViewData["CategoryId"] = new SelectList(_context.Category, "Id", "Name");
+            // Find User
+            var user = await _userManager.GetUserAsync(User);
+
+            var category = await _context.Category
+                .Where(c => c.UserId == user.Id)
+                .ToListAsync();
+
+            ViewData["CategoryId"] = new SelectList(category, "Id", "Name");
             return View();
         }
 
@@ -132,6 +139,16 @@ namespace ProgressTrackerApp.Controllers
             var user = await _userManager.GetUserAsync(User);
             habit.UserId = user.Id;
 
+            // If user did not choose colors they will be setted as default colors
+            if (habit.BackgroundColor == null) 
+            {
+                habit.BackgroundColor = "#3788d8";
+            }
+            if (habit.TextColor == null)
+            {
+                habit.TextColor = "#FFFFFF";
+            }
+
             if (ModelState.IsValid)
             {
                 _context.Add(habit);
@@ -145,6 +162,9 @@ namespace ProgressTrackerApp.Controllers
         // GET: Habits/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
+            // Find User
+            var user = await _userManager.GetUserAsync(User);
+
             if (id == null)
             {
                 return NotFound();
@@ -155,7 +175,13 @@ namespace ProgressTrackerApp.Controllers
             {
                 return NotFound();
             }
-            ViewData["CategoryId"] = new SelectList(_context.Category, "Id", "Name", habit.CategoryId);
+
+            var category = await _context.Category
+                .Where(c => c.UserId == user.Id)
+                .ToListAsync();
+
+            ViewData["CategoryId"] = new SelectList(category, "Id", "Name", habit.CategoryId);
+
             return View(habit);
         }
 
@@ -164,7 +190,7 @@ namespace ProgressTrackerApp.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Description,IsActive,Visibility,CategoryId,UserId")] Habit habit)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Description,IsActive,Visibility,BackgroundColor,TextColor,CategoryId,UserId")] Habit habit)
         {
             if (id != habit.Id)
             {

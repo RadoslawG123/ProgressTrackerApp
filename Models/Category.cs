@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion.Internal;
+using System.ComponentModel.DataAnnotations;
 
 namespace ProgressTrackerApp.Models
 {
@@ -8,7 +9,9 @@ namespace ProgressTrackerApp.Models
         public int Id { get; set; }
         public string Name { get; set; } = null!;
         public bool Visibility { get; set; }
+        [Display(Name = "Background Color")]
         public string? BackgroundColor { get; set; }
+        [Display(Name = "Text Color")]
         public string? TextColor { get; set; }
         [ValidateNever]
         public string UserId { get; set; } = null!;

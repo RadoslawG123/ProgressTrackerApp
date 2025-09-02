@@ -25,7 +25,6 @@ public class HabitCompletionsController : Controller
         var completions = await _context.HabitCompletion
             .Where(h => h.UserId == user.Id)
             .Include(h => h.Habit)
-            .Include(h => h.User)
             .ToListAsync();
 
         return View(completions);
@@ -33,9 +32,21 @@ public class HabitCompletionsController : Controller
 
     // GET: HabitCompletions/Create
     [HttpGet]
-    public IActionResult Create(string date)
+    public async Task<IActionResult> Create(string date)
     {
-        ViewData["HabitId"] = new SelectList(_context.Habit, "Id", "Name");
+        // Find User
+        var user = await _userManager.GetUserAsync(User);
+
+        var habits = await _context.Habit
+            .Where(h => h.UserId == user.Id)
+            .ToListAsync();
+
+        if (habits.Count == 0)
+        {
+            return RedirectToAction("Create", "Habits");
+        }
+
+        ViewData["HabitId"] = new SelectList(habits, "Id", "Name");
         ViewData["HabitDate"] = DateTime.Parse(date).ToString("yyyy-MM-dd");
         return View();
     }
@@ -48,8 +59,6 @@ public class HabitCompletionsController : Controller
         // Find User
         var user = await _userManager.GetUserAsync(User);
         habitCompletion.UserId = user.Id;
-
-
 
         habitCompletion.Habit = _context.Habit.FirstOrDefault(h => h.Id == habitCompletion.HabitId);
 

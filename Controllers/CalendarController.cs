@@ -20,14 +20,18 @@ namespace ProgressTrackerApp.Controllers
         }
 
         [HttpGet]
-        public IActionResult Index(string redirectionDate, int? catId)
+        public async Task<IActionResult> Index(string redirectionDate, int? catId)
         {
+            // Find User
+            var user = await _userManager.GetUserAsync(User);
+
             if (catId != null)
             {
                 // Habits to show
                 ViewData["Habits"] = JSONListHelper.GetHabitListJSONString(
                     _context.HabitCompletion
                     .Include(h => h.Habit)
+                    .Where(h => h.Habit.UserId == user.Id)
                     .Where(h => h.Habit.Visibility == true)
                     .Where(h => h.Habit.CategoryId == catId)
                     .ToList()
@@ -39,6 +43,7 @@ namespace ProgressTrackerApp.Controllers
                 ViewData["Habits"] = JSONListHelper.GetHabitListJSONString(
                     _context.HabitCompletion
                     .Include(h => h.Habit)
+                    .Where(h => h.Habit.UserId == user.Id)
                     .Where(h => h.Habit.Visibility == true)
                     .ToList()
                     );
@@ -47,6 +52,7 @@ namespace ProgressTrackerApp.Controllers
             // Categories to show
             ViewData["Categories"] = JSONListHelper.GetCategoriesListJSONString(
                 _context.Category
+                .Where(c => c.UserId == user.Id)
                 .ToList()
                 );
 
@@ -75,7 +81,7 @@ namespace ProgressTrackerApp.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(500, $"Błąd serwera: {ex.Message}");
+                return StatusCode(500, $"Server error: {ex.Message}");
             }
         }
     }
