@@ -222,22 +222,32 @@ namespace ProgressTrackerApp.Controllers
         }
 
         // GET: Habits/Delete/5
-        public async Task<IActionResult> Delete(int? id)
+        public async Task<IActionResult> Delete(int? id, bool deleteAll)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var habit = await _context.Habit
+            ViewData["DeleteAll"] = deleteAll;
+
+            if (deleteAll)
+            {
+                return View();
+            }
+            else
+            {
+                var habit = await _context.Habit
                 .Include(h => h.Category)
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (habit == null)
-            {
-                return NotFound();
-            }
 
-            return View(habit);
+                if (habit == null)
+                {
+                    return NotFound();
+                }
+
+                return View(habit);
+            }
         }
 
         // POST: Habits/Delete/5
@@ -249,6 +259,28 @@ namespace ProgressTrackerApp.Controllers
             if (habit != null)
             {
                 _context.Habit.Remove(habit);
+            }
+
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
+        }
+
+        // POST: Habits/DeleteAll
+        [HttpPost, ActionName("DeleteAll")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteAllConfirmed()
+        {
+            // Find User
+            var user = await _userManager.GetUserAsync(User);
+
+            var habits = await _context.Habit
+                .Include(h => h.Category)
+                .Where(h => h.UserId == user.Id)
+                .ToListAsync();
+
+            if (habits.Count() != 0)
+            {
+                habits.RemoveAll(h => true);
             }
 
             await _context.SaveChangesAsync();
