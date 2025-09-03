@@ -280,7 +280,7 @@ namespace ProgressTrackerApp.Controllers
 
             if (habits.Count() != 0)
             {
-                habits.RemoveAll(h => true);
+                _context.Habit.RemoveRange(habits);
             }
 
             await _context.SaveChangesAsync();
