@@ -49,7 +49,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     categories.forEach(cat => {
         html += `
-            <li><a class="dropdown-item" href="#" data-cat-id="${cat.Id}">
+            <li><a class="dropdown-item" href="#" data-cat-id="${cat.Id}" style="background-color: ${cat.BackgroundColor}; color: ${cat.TextColor}">
                 ${cat.Name}
             </a></li>`;
     });
