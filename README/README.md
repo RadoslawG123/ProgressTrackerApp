@@ -4,7 +4,7 @@
 
 ## 🎥 Short Presentation
 
-![Dashboard/Calendar Screenshot](./Presentation1.gif)
+![Dashboard/Calendar Screenshot](./README/Presentation1.gif)
 
 ## 🛠 Tech Stack
 
