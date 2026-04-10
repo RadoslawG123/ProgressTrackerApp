@@ -43,7 +43,9 @@
             },
             categoryButton: {
                 text: '',
-                click: function () {}
+                click: function () {
+                    window.location.href = `/HabitCompletions/Create?date=${info.dateStr}`;
+}
             },
             categoryColorsButton: {
                 text: 'Toggle',

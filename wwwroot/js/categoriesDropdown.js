@@ -10,6 +10,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (!categoryColorsBtn || !categories) return;
 
     categoryColorsBtn.addEventListener('click', e => {
+        redirectionDate = e.detail.start;
         var categoryColorsChecker = false;
         calendar.getEvents().forEach((event) => {
             if (event.extendedProps.CategoryId != null) {
